@@ -55,6 +55,9 @@ const movieDataSlice = createSlice({
     changeShimmer: state => {
       state.shimmer = !state.shimmer;
     },
+    resetShimmer: state => {
+      state.shimmer = false;
+    },
     changeList: (state, action) => {
       state.list = action.payload.list;
     },

@@ -134,6 +134,13 @@ interface MovieDataStateType {
   };
 }
 
+interface ApiDataType {
+  page: number;
+  results: Array<Partial<MovieType>>;
+  total_pages: number;
+  total_results: number;
+}
+
 interface SearchDataStateType {
   searchData: {
     load: boolean;
@@ -253,6 +260,13 @@ interface VideoType {
   };
 }
 
+interface User {
+  email: string;
+  id: string;
+  name: string;
+  phone: string;
+}
+
 interface SearchType {
   page: number;
   results: Array<Partial<MovieType>>;
@@ -260,10 +274,30 @@ interface SearchType {
   total_results: number;
 }
 
+interface ChatType {
+  id: string;
+  name: string;
+  email: string;
+  timeStamp: string;
+  unread: UnreadObjectType;
+}
+
+interface GroupType {
+  name: string;
+  id: string;
+  members: string[];
+  timeStamp: string;
+  unread: UnreadObjectType;
+}
+
+type UnreadObjectType = Record<string, boolean>;
+
 type RootState = ReturnType<typeof store.getState>;
 type AppDispatch = typeof store.dispatch;
 
 export type {
+  User,
+  ApiDataType,
   AppDispatch,
   CrewType,
   DetailType,
@@ -276,4 +310,7 @@ export type {
   TrendingDataStateType,
   VideoType,
   SearchType,
+  GroupType,
+  ChatType,
+  UnreadObjectType,
 };

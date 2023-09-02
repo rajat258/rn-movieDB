@@ -39,6 +39,29 @@
         margin: auto;"/>
 </div>
 
+<div style="display: flex; justify-content: center;">
+  <img src="./app/assets/github/screenshot5.png" alt="App Screenshot" 
+        style="display: block;
+        height: 400px;
+        width: 200px;
+        margin: auto;"/>
+    <img src="./app/assets/github/screenshot6.png" alt="App Screenshot" 
+        style="display: block;
+        height: 400px;
+        width: 200px;
+        margin: auto;"/>    
+    <img src="./app/assets/github/screenshot7.png" alt="App Screenshot" 
+        style="display: block;
+        height: 400px;
+        width: 200px;
+        margin: auto;"/>
+    <img src="./app/assets/github/screenshot8.png" alt="App Screenshot" 
+        style="display: block;
+        height: 400px;
+        width: 200px;
+        margin: auto;"/>
+</div>
+
 
 ## Features
 

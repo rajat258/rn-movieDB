@@ -4,8 +4,7 @@ import {Images} from '../../assets';
 import {Strings} from '../../constants';
 import {Colors} from '../../theme';
 import type {MovieType} from '../../type';
-import {Item} from '../home/Item';
-import {HomeSkeleton, ImageSkeleton} from '../home/skeleton';
+import {DataSkeleton, ImageSkeleton, ListItem} from '../home';
 import styles from './Styles';
 import useSearch, {SearchHookReturnType} from './useSearch';
 
@@ -36,12 +35,17 @@ const Search = (): JSX.Element => {
     loadMoreData,
     page,
     total_pages,
+    isSearched,
+    search,
+    clearSearch,
   }: SearchHookReturnType = useSearch();
 
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
         <TextInput
+          value={search}
+          allowFontScaling={false}
           onSubmitEditing={handleQuery}
           onChangeText={val => handleSearch(val)}
           autoCorrect={false}
@@ -50,33 +54,43 @@ const Search = (): JSX.Element => {
           placeholder={Strings.search}
           style={styles.textInput}
         />
+        {search.length !== 0 && (
+          <TouchableOpacity onPress={clearSearch} style={styles.crossButton}>
+            <Image source={Images.cross} style={styles.image} />
+          </TouchableOpacity>
+        )}
         <TouchableOpacity onPress={handleQuery} style={styles.enterButton}>
-          <Image source={Images.enter} style={styles.enterImage} />
+          <Image source={Images.enter} style={styles.image} />
         </TouchableOpacity>
       </View>
-      {data.length === 0 ? (
-        <Image source={{uri: Images.noSearch}} style={styles.noSearchFound} />
+      {shimmer ? (
+        <>
+          <View style={styles.marginTop} />
+          <DataSkeleton />
+        </>
       ) : (
         <>
-          {shimmer ? (
-            <HomeSkeleton />
-          ) : (
-            <FlatList
-              numColumns={2}
-              style={styles.flatList}
-              showsHorizontalScrollIndicator={false}
-              data={data}
-              keyExtractor={(item, index) =>
-                item?.id?.toString() + index.toString()
-              }
-              ListFooterComponent={
-                page < total_pages ? <LoadMoreSkeleton {...{data}} /> : null
-              }
-              onEndReached={loadMoreData}
-              onEndReachedThreshold={0.4}
-              renderItem={({item}) => <Item item={item as MovieType} />}
+          {data.length === 0 && (
+            <Image
+              source={isSearched ? Images.noResultFound : Images.noSearch}
+              style={styles.noSearchFound}
             />
           )}
+          <FlatList
+            numColumns={2}
+            style={styles.flatList}
+            showsVerticalScrollIndicator={false}
+            data={data}
+            keyExtractor={(item, index) =>
+              item?.id?.toString() + index.toString()
+            }
+            ListFooterComponent={
+              page < total_pages ? <LoadMoreSkeleton {...{data}} /> : null
+            }
+            onEndReached={loadMoreData}
+            onEndReachedThreshold={0.4}
+            renderItem={({item}) => <ListItem item={item as MovieType} />}
+          />
         </>
       )}
     </View>

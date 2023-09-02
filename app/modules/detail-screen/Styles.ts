@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 import {
   Colors,
   globalMetrics,
+  height,
   horizontalScale,
   moderateScale,
   verticalScale,
@@ -95,7 +96,7 @@ const Styles = StyleSheet.create({
   },
   detailText: {
     textAlign: 'justify',
-    marginRight: horizontalScale(10),
+    marginRight: horizontalScale(20),
     marginLeft: horizontalScale(20),
     marginTop: verticalScale(5),
     fontSize: moderateScale(14),
@@ -104,6 +105,18 @@ const Styles = StyleSheet.create({
   },
   paddingBottom: {
     paddingBottom: verticalScale(20),
+  },
+  activityIndicator: {
+    position: 'absolute',
+    left: '50%',
+    right: '50%',
+    top: verticalScale(100),
+  },
+  mainIndicator: {
+    position: 'absolute',
+    left: '50%',
+    right: '50%',
+    top: height / 3,
   },
 });
 

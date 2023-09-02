@@ -14,7 +14,7 @@ const Styles = StyleSheet.create({
   },
   searchContainer: {
     flexDirection: 'row',
-    height: verticalScale(50),
+    height: moderateScale(50),
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: verticalScale(20),
@@ -30,6 +30,10 @@ const Styles = StyleSheet.create({
     fontSize: moderateScale(16),
     color: Colors.black,
   },
+  crossButton: {
+    position: 'absolute',
+    right: horizontalScale(70),
+  },
   enterButton: {
     marginLeft: horizontalScale(10),
     alignItems: 'center',
@@ -37,15 +41,15 @@ const Styles = StyleSheet.create({
     borderRadius: moderateScale(10),
     borderWidth: moderateScale(1),
     borderColor: Colors.accent200,
-    padding: moderateScale(7),
+    padding: moderateScale(11),
   },
-  enterImage: {
+  image: {
     tintColor: Colors.accent200,
     height: moderateScale(24),
     width: moderateScale(24),
   },
   flatList: {
-    marginTop: verticalScale(30),
+    marginTop: verticalScale(10),
     paddingLeft: horizontalScale(20),
   },
   noSearchFound: {
@@ -60,6 +64,9 @@ const Styles = StyleSheet.create({
     position: 'absolute',
     right: horizontalScale(20),
     bottom: verticalScale(150),
+  },
+  marginTop: {
+    marginTop: verticalScale(10),
   },
 });
 

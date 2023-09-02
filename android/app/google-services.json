@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "544501400583",
+    "project_id": "rn-moviedb",
+    "storage_bucket": "rn-moviedb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:544501400583:android:0059f738dd8d7bcc3856a2",
+        "android_client_info": {
+          "package_name": "com.moviedb"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "544501400583-4n9crg160vi9oh1q8i31rfc2ilhhcdqo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnhKdP4Z7GMv7B8k2C0maaGq6kT-oCJfM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "544501400583-4n9crg160vi9oh1q8i31rfc2ilhhcdqo.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "544501400583-9c3313308o4481q1vfl6mecqqg9k2dtu.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "org.reactjs.native.example.movieDB"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

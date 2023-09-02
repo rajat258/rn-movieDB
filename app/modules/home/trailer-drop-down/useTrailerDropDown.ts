@@ -1,6 +1,7 @@
 import {useState} from 'react';
+import {Alert} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {Url} from '../../../constants';
+import {Strings, Url} from '../../../constants';
 import {trailerDataActions} from '../../../redux';
 import {getData} from '../../../services';
 import {AppDispatch, TrailerDataStateType} from '../../../type';
@@ -8,11 +9,15 @@ import {TrailerProps} from './TrailerDropDown';
 
 export interface TrailerHookReturnType {
   handleTrailerDropDown: () => void;
-  loadStreamingData: () => Promise<void>;
-  loadTopRatedData: () => Promise<void>;
+  loadTrailerData: ({streaming, topRated}: TrailerDataProps) => Promise<void>;
   trailerDropDown: boolean;
   streaming: boolean;
   topRated: boolean;
+}
+
+interface TrailerDataProps {
+  streaming?: boolean;
+  topRated?: boolean;
 }
 
 const useTrailerDropDown = ({
@@ -31,38 +36,30 @@ const useTrailerDropDown = ({
   const handleTrailerDropDown = (): void =>
     setTrailerDropDown(!trailerDropDown);
 
-  const loadStreamingData = async (): Promise<void> => {
+  const loadTrailerData = async ({
+    streaming: s = false,
+    topRated: t = false,
+  }: TrailerDataProps): Promise<void> => {
     handleBackgroundImage('');
     dispatch(trailerDataActions.changeShimmer());
     list = {
-      streaming: true,
-      topRated: false,
+      streaming: s,
+      topRated: t,
     };
+    let url: string;
+    if (s) {
+      url = Url.popularStreaming;
+    } else {
+      url = Url.movieTopRated;
+    }
     setTimeout(async () => {
       try {
-        const data = await getData(Url.popularStreaming + 1);
+        const data = await getData(url + 1);
         dispatch(trailerDataActions.addData({data}));
         dispatch(trailerDataActions.changeList({list}));
       } catch (error) {
-        dispatch(trailerDataActions.changeShimmer());
-      }
-    }, 2000);
-  };
-
-  const loadTopRatedData = async (): Promise<void> => {
-    handleBackgroundImage('');
-    dispatch(trailerDataActions.changeShimmer());
-    list = {
-      streaming: false,
-      topRated: true,
-    };
-    setTimeout(async () => {
-      try {
-        const data = await getData(Url.movieTopRated + 1);
-        dispatch(trailerDataActions.addData({data}));
-        dispatch(trailerDataActions.changeList({list}));
-      } catch (error) {
-        dispatch(trailerDataActions.changeShimmer());
+        Alert.alert(Strings.error, Strings.couldNotLoad);
+        dispatch(trailerDataActions.resetShimmer());
       }
     }, 2000);
   };
@@ -72,8 +69,7 @@ const useTrailerDropDown = ({
     topRated,
     trailerDropDown,
     handleTrailerDropDown,
-    loadStreamingData,
-    loadTopRatedData,
+    loadTrailerData,
   };
 };
 

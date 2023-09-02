@@ -13,7 +13,7 @@ const DropDownStyles = StyleSheet.create({
   },
   button: {
     height: moderateScale(30),
-    width: horizontalScale(125),
+    width: horizontalScale(124),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',

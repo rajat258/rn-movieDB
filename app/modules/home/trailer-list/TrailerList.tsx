@@ -31,6 +31,7 @@ const TrailerList = ({
     backgroundImage,
     _onScroll,
     handleBackgroundImage,
+    currentIndex,
   }: TrailerHookReturnType = useTrailer();
 
   return (
@@ -68,9 +69,11 @@ const TrailerList = ({
                   item?.id?.toString() + index.toString()
                 }
                 ListFooterComponent={
-                  page <= totalPage ? <TrailerImageSkeleton /> : null
+                  page < totalPage ? <TrailerImageSkeleton /> : null
                 }
-                renderItem={({item}) => <Item item={item as MovieType} />}
+                renderItem={({item, index}) => (
+                  <Item {...{currentIndex, index}} item={item as MovieType} />
+                )}
                 onEndReached={loadMoreData}
                 onEndReachedThreshold={0.9}
               />

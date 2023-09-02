@@ -1,9 +1,9 @@
 import {RouteProp, useRoute} from '@react-navigation/native';
-import {CrewType, DetailType} from '../../type';
-import {getData} from '../../services';
-import {Strings, Url} from '../../constants';
-import {Alert} from 'react-native';
 import {useEffect, useRef, useState} from 'react';
+import {Alert} from 'react-native';
+import {Strings, Url} from '../../constants';
+import {getData} from '../../services';
+import {CrewType, DetailType} from '../../type';
 import {playTrailer} from '../../utils';
 
 export interface DetailHookReturnType {
@@ -11,37 +11,33 @@ export interface DetailHookReturnType {
   year: Date;
   genres: string;
   director: Partial<CrewType>;
-  _playTrailer: () => void;
+  trailer: string;
+  isTrailer: boolean;
+  isLoading: boolean;
+  handleTrailer: () => Promise<void>;
 }
 
 const useDetailScreen = (): DetailHookReturnType => {
   const route =
     useRoute<RouteProp<{params: {id: number; tv: boolean}}, 'params'>>();
   const [item, setItem] = useState<Partial<DetailType>>({});
+  const [trailer, setTrailer] = useState<string>('');
+  const [isTrailer, setIsTrailer] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const isTv = useRef<boolean>(false);
   const year: Date = new Date(
     item?.release_date ?? item?.first_air_date ?? '01-01-2021',
   );
 
-  // const getItem = async (): Promise<void> => {
-  //   try {
-  //     let url;
-  //     if (isTv.current) {
-  //       url = Url.tv + '/' + route.params?.id + Url.credits;
-  //     } else {
-  //       url = Url.movie + '/' + route.params?.id + Url.credits;
-  //     }
-  //     const data = await getData(url);
-  //     setItem(data);
-  //   } catch (e) {
-  //     if (isTv.current) {
-  //       Alert.alert(Strings.error);
-  //     } else {
-  //       isTv.current = true;
-  //       getItem();
-  //     }
-  //   }
-  // };
+  const handleTrailer = async (): Promise<void> => {
+    if (isTrailer) {
+      setIsTrailer(false);
+      setTrailer('');
+    } else {
+      trailerFunction();
+      setIsLoading(true);
+    }
+  };
 
   const getItem = async (): Promise<void> => {
     let url;
@@ -54,16 +50,24 @@ const useDetailScreen = (): DetailHookReturnType => {
       const data = await getData(url);
       setItem(data);
     } catch (error) {
-      Alert.alert(Strings.error);
+      Alert.alert(Strings.error, Strings.trailerNotAvailable);
     }
   };
 
   // Note: Trailers for TV are not available in API.
-  const _playTrailer = async (): Promise<void> => {
+  const trailerFunction = async (): Promise<void> => {
     if (isTv.current) {
-      await playTrailer(Url.tv + '/' + route.params?.id + Url.videos);
+      const key = await playTrailer(
+        Url.tv + '/' + route.params?.id + Url.videos,
+      );
+      setIsTrailer(key.length !== 0);
+      setTrailer(key);
     } else {
-      await playTrailer(Url.movie + '/' + route.params?.id + Url.videos);
+      const key = await playTrailer(
+        Url.movie + '/' + route.params?.id + Url.videos,
+      );
+      setIsTrailer(key.length !== 0);
+      setTrailer(key);
     }
   };
 
@@ -77,11 +81,14 @@ const useDetailScreen = (): DetailHookReturnType => {
   }, []);
 
   return {
+    isLoading,
+    trailer,
+    handleTrailer,
     director,
     year,
     item,
     genres,
-    _playTrailer,
+    isTrailer,
   };
 };
 

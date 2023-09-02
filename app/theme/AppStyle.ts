@@ -10,6 +10,10 @@ const AppStyle = StyleSheet.create({
   container: {
     flex: 1,
   },
+  coloredContainer: {
+    flex: 1,
+    backgroundColor: Colors.background,
+  },
   backgroundColor: {
     backgroundColor: Colors.background,
   },
@@ -20,6 +24,16 @@ const AppStyle = StyleSheet.create({
   },
   fullWidth: {
     width: width,
+  },
+  fullHeightWidth: {
+    width: '100%',
+    height: '100%',
+  },
+  alignItems: {
+    alignItems: 'center',
+  },
+  justifyContent: {
+    justifyContent: 'center',
   },
   row: {
     flexDirection: 'row',

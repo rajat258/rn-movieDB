@@ -1,7 +1,6 @@
 import React from 'react';
 import {FlatList} from 'react-native';
-import {Item} from '../../modules/home/Item';
-import {DataSkeleton, HomeSkeleton} from '../../modules/home/skeleton';
+import {DataSkeleton, HomeSkeleton, ListItem} from '../../modules';
 import {MovieType} from '../../type';
 import Styles from './Styles';
 
@@ -33,8 +32,8 @@ const List = ({
           keyExtractor={(item, index) =>
             item?.id?.toString() + index.toString()
           }
-          ListFooterComponent={page <= totalPage ? <DataSkeleton /> : null}
-          renderItem={({item}) => <Item item={item as MovieType} />}
+          ListFooterComponent={page < totalPage ? <DataSkeleton /> : null}
+          renderItem={({item}) => <ListItem item={item as MovieType} />}
           onEndReached={loadMoreData}
           onEndReachedThreshold={0.9}
         />

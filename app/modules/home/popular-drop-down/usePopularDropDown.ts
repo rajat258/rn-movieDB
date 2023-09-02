@@ -1,19 +1,24 @@
 import {useState} from 'react';
+import {Alert} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {Url} from '../../../constants';
+import {Strings, Url} from '../../../constants';
 import {popularDataActions} from '../../../redux';
 import {getData} from '../../../services';
 import {AppDispatch, PopularDataStateType} from '../../../type';
 
 export interface PopularHookReturnType {
   handlePopularDropDown: () => void;
-  loadPopularTvData: () => Promise<void>;
-  loadPopularRentData: () => Promise<void>;
-  loadPopularStreamData: () => Promise<void>;
+  loadPopularData: ({streaming, tv, rent}: PopularDataProps) => Promise<void>;
   popularDropDown: boolean;
   rent: boolean;
   streaming: boolean;
   tv: boolean;
+}
+
+interface PopularDataProps {
+  streaming?: boolean;
+  tv?: boolean;
+  rent?: boolean;
 }
 
 const usePopularDropDown = (): PopularHookReturnType => {
@@ -31,56 +36,33 @@ const usePopularDropDown = (): PopularHookReturnType => {
   const handlePopularDropDown = (): void =>
     setPopularDropDown(!popularDropDown);
 
-  const loadPopularTvData = async (): Promise<void> => {
+  const loadPopularData = async ({
+    streaming: s = false,
+    tv: t = false,
+    rent: r = false,
+  }: PopularDataProps): Promise<void> => {
     dispatch(popularDataActions.changeShimmer());
     list = {
-      streaming: false,
-      tv: true,
-      rent: false,
+      streaming: s,
+      tv: t,
+      rent: r,
     };
+    let url: string;
+    if (s) {
+      url = Url.popularStreaming;
+    } else if (t) {
+      url = Url.popularTv;
+    } else {
+      url = Url.popularRent;
+    }
     setTimeout(async () => {
       try {
-        const data = await getData(Url.popularTv + 1);
+        const data = await getData(url + 1);
         dispatch(popularDataActions.addData({data}));
         dispatch(popularDataActions.changeList({list}));
       } catch (error) {
-        dispatch(popularDataActions.changeShimmer());
-      }
-    }, 2000);
-  };
-
-  const loadPopularStreamData = async (): Promise<void> => {
-    dispatch(popularDataActions.changeShimmer());
-    list = {
-      streaming: true,
-      tv: false,
-      rent: false,
-    };
-    setTimeout(async () => {
-      try {
-        const data = await getData(Url.popularStreaming + 1);
-        dispatch(popularDataActions.addData({data}));
-        dispatch(popularDataActions.changeList({list}));
-      } catch (error) {
-        dispatch(popularDataActions.changeShimmer());
-      }
-    }, 2000);
-  };
-
-  const loadPopularRentData = async (): Promise<void> => {
-    dispatch(popularDataActions.changeShimmer());
-    list = {
-      streaming: false,
-      tv: false,
-      rent: true,
-    };
-    setTimeout(async () => {
-      try {
-        const data = await getData(Url.popularRent + 1);
-        dispatch(popularDataActions.addData({data}));
-        dispatch(popularDataActions.changeList({list}));
-      } catch (error) {
-        dispatch(popularDataActions.changeShimmer());
+        Alert.alert(Strings.error, Strings.couldNotLoad);
+        dispatch(popularDataActions.resetShimmer());
       }
     }, 2000);
   };
@@ -91,9 +73,7 @@ const usePopularDropDown = (): PopularHookReturnType => {
     tv,
     popularDropDown,
     handlePopularDropDown,
-    loadPopularTvData,
-    loadPopularStreamData,
-    loadPopularRentData,
+    loadPopularData,
   };
 };
 

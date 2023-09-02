@@ -45,6 +45,9 @@ const searchDataSlice = createSlice({
     changeShimmer: state => {
       state.shimmer = !state.shimmer;
     },
+    resetShimmer: state => {
+      state.shimmer = false;
+    },
     appendData: (state, action) => {
       const appendedData = [...state.data.results, ...action.payload.data];
       state.data.results = appendedData;

@@ -16,9 +16,7 @@ const PopularDropDown = (): JSX.Element => {
     tv,
     popularDropDown,
     handlePopularDropDown,
-    loadPopularTvData,
-    loadPopularStreamData,
-    loadPopularRentData,
+    loadPopularData,
   }: PopularHookReturnType = usePopularDropDown();
 
   return (
@@ -44,18 +42,25 @@ const PopularDropDown = (): JSX.Element => {
           style={Styles.listContainer}
           colors={[Colors.indicatorGreen, Colors.white]}>
           {!streaming && (
-            <TouchableOpacity onPress={loadPopularStreamData}>
-              <Text style={Styles.text}>{Strings.streaming}</Text>
+            <TouchableOpacity
+              onPress={() => loadPopularData({streaming: true})}>
+              <Text allowFontScaling={false} style={Styles.text}>
+                {Strings.streaming}
+              </Text>
             </TouchableOpacity>
           )}
           {!tv && (
-            <TouchableOpacity onPress={loadPopularTvData}>
-              <Text style={Styles.text}>{Strings.onTV}</Text>
+            <TouchableOpacity onPress={() => loadPopularData({tv: true})}>
+              <Text allowFontScaling={false} style={Styles.text}>
+                {Strings.onTV}
+              </Text>
             </TouchableOpacity>
           )}
           {!rent && (
-            <TouchableOpacity onPress={loadPopularRentData}>
-              <Text style={Styles.text}>{Strings.forRent}</Text>
+            <TouchableOpacity onPress={() => loadPopularData({rent: true})}>
+              <Text allowFontScaling={false} style={Styles.text}>
+                {Strings.forRent}
+              </Text>
             </TouchableOpacity>
           )}
         </LinearGradient>

@@ -27,9 +27,8 @@ const Styles = StyleSheet.create({
   headerText: {
     color: Colors.white,
     fontSize: moderateScale(24),
-    fontWeight: '600',
+    fontWeight: '700',
     marginRight: horizontalScale(20),
-    marginLeft: horizontalScale(20),
   },
   flatList: {
     zIndex: globalMetrics.isIos ? -1 : 0,

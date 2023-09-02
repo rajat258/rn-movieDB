@@ -1,17 +1,22 @@
 import {useState} from 'react';
+import {Alert} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {Url} from '../../../constants';
+import {Strings, Url} from '../../../constants';
 import {trendingDataActions} from '../../../redux';
 import {getData} from '../../../services';
 import {TrendingDataStateType} from '../../../type';
 
 export interface DropDownHookReturnType {
   handleTrendingDropDown: () => void;
-  loadTodayData: () => Promise<void>;
-  loadWeekData: () => Promise<void>;
+  loadTrendingData: ({today, week}: TrendingDataProps) => Promise<void>;
   trendingDropDownVisible: boolean;
   today: boolean;
   week: boolean;
+}
+
+interface TrendingDataProps {
+  today?: boolean;
+  week?: boolean;
 }
 
 const useTrendingDropDown = (): DropDownHookReturnType => {
@@ -29,36 +34,24 @@ const useTrendingDropDown = (): DropDownHookReturnType => {
   const handleTrendingDropDown = (): void =>
     setTrendingDropDownVisible(!trendingDropDownVisible);
 
-  const loadTodayData = async (): Promise<void> => {
+  const loadTrendingData = async ({
+    today: t = false,
+    week: w = false,
+  }: TrendingDataProps): Promise<void> => {
     dispatch(trendingDataActions.changeShimmer());
     list = {
-      today: true,
-      week: false,
+      today: t,
+      week: w,
     };
+    const url: string = t ? Url.trendingToday : Url.trendingWeek;
     setTimeout(async () => {
       try {
-        const data = await getData(Url.trendingToday + 1);
+        const data = await getData(url + 1);
         dispatch(trendingDataActions.addData({data}));
         dispatch(trendingDataActions.changeList({list}));
       } catch (error) {
-        dispatch(trendingDataActions.changeShimmer());
-      }
-    }, 2000);
-  };
-
-  const loadWeekData = async (): Promise<void> => {
-    dispatch(trendingDataActions.changeShimmer());
-    list = {
-      today: false,
-      week: true,
-    };
-    setTimeout(async () => {
-      try {
-        const data = await getData(Url.trendingWeek + 1);
-        dispatch(trendingDataActions.addData({data}));
-        dispatch(trendingDataActions.changeList({list}));
-      } catch (error) {
-        dispatch(trendingDataActions.changeShimmer());
+        Alert.alert(Strings.error, Strings.couldNotLoad);
+        dispatch(trendingDataActions.resetShimmer());
       }
     }, 2000);
   };
@@ -68,8 +61,7 @@ const useTrendingDropDown = (): DropDownHookReturnType => {
     week,
     trendingDropDownVisible,
     handleTrendingDropDown,
-    loadTodayData,
-    loadWeekData,
+    loadTrendingData,
   };
 };
 

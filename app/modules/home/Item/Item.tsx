@@ -34,16 +34,17 @@ const Item = ({item}: {item: MovieType}): JSX.Element => {
             Styles.image,
             globalMetrics.isAndroid && !isLoaded && Styles.hideImage,
           ])}
-          source={{
-            uri: item?.poster_path
-              ? Url.imageFetchUrl + item?.poster_path
-              : Images.noPosterImage,
-          }}
+          source={
+            item?.poster_path
+              ? {uri: Url.imageFetchUrl + item?.poster_path}
+              : Images.noPosterImage
+          }
         />
         {!isLoaded && globalMetrics.isAndroid && <ImageSkeleton />}
         {isLoaded && (
           <View style={Styles.progressContainer}>
             <CircularProgress
+              allowFontScaling={false}
               valueSuffix={'%'}
               valueSuffixStyle={{fontSize: moderateScale(5)}}
               activeStrokeWidth={moderateScale(2)}
@@ -61,10 +62,14 @@ const Item = ({item}: {item: MovieType}): JSX.Element => {
       </TouchableOpacity>
       {isLoaded && (
         <View style={Styles.detailsContainer}>
-          <Text ellipsizeMode="clip" numberOfLines={2} style={Styles.movieText}>
+          <Text
+            ellipsizeMode="clip"
+            numberOfLines={2}
+            style={Styles.movieText}
+            allowFontScaling={false}>
             {item?.name ?? item?.title ?? Strings.notAvailable}
           </Text>
-          <Text style={Styles.dateText}>
+          <Text style={Styles.dateText} allowFontScaling={false}>
             {item?.first_air_date ?? item?.release_date ?? Strings.notAvailable}
           </Text>
         </View>

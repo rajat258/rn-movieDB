@@ -1,19 +1,28 @@
 import {useState} from 'react';
+import {Alert} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {Url} from '../../../constants';
+import {Strings, Url} from '../../../constants';
 import {movieDataActions} from '../../../redux';
 import {getData} from '../../../services';
 import {AppDispatch, MovieDataStateType} from '../../../type';
 
 export interface DropDownHookReturnType {
   handleMovieDropDown: () => void;
-  loadNowPlayingData: () => Promise<void>;
-  loadTopRatedData: () => Promise<void>;
-  loadUpcomingData: () => Promise<void>;
+  loadMovieData: ({
+    nowPlaying,
+    topRated,
+    upcoming,
+  }: MovieDataProps) => Promise<void>;
   movieDropDownVisible: boolean;
   nowPlaying: boolean;
   topRated: boolean;
   upcoming: boolean;
+}
+
+interface MovieDataProps {
+  nowPlaying?: boolean;
+  topRated?: boolean;
+  upcoming?: boolean;
 }
 
 const useMovieDropDown = (): DropDownHookReturnType => {
@@ -32,69 +41,44 @@ const useMovieDropDown = (): DropDownHookReturnType => {
   const handleMovieDropDown = (): void =>
     setMovieDropDownVisible(!movieDropDownVisible);
 
-  const loadNowPlayingData = async (): Promise<void> => {
+  const loadMovieData = async ({
+    nowPlaying: n = false,
+    topRated: t = false,
+    upcoming: u = false,
+  }: MovieDataProps): Promise<void> => {
     dispatch(movieDataActions.changeShimmer());
     list = {
-      nowPlaying: true,
-      topRated: false,
-      upcoming: false,
+      nowPlaying: n,
+      topRated: t,
+      upcoming: u,
     };
+    let url: string;
+    if (n) {
+      url = Url.movieNowPlaying;
+    } else if (t) {
+      url = Url.movieTopRated;
+    } else {
+      url = Url.movieUpcoming;
+    }
     setTimeout(async () => {
       try {
-        const data = await getData(Url.movieNowPlaying + 1);
+        const data = await getData(url + 1);
         dispatch(movieDataActions.addData({data}));
         dispatch(movieDataActions.changeList({list}));
       } catch (error) {
-        dispatch(movieDataActions.changeShimmer());
-      }
-    }, 2000);
-  };
-
-  const loadTopRatedData = async (): Promise<void> => {
-    dispatch(movieDataActions.changeShimmer());
-    list = {
-      nowPlaying: false,
-      topRated: true,
-      upcoming: false,
-    };
-    setTimeout(async () => {
-      try {
-        const data = await getData(Url.movieTopRated + 1);
-        dispatch(movieDataActions.addData({data}));
-        dispatch(movieDataActions.changeList({list}));
-      } catch (error) {
-        dispatch(movieDataActions.changeShimmer());
-      }
-    }, 2000);
-  };
-
-  const loadUpcomingData = async (): Promise<void> => {
-    dispatch(movieDataActions.changeShimmer());
-    list = {
-      nowPlaying: false,
-      topRated: false,
-      upcoming: true,
-    };
-    setTimeout(async () => {
-      try {
-        const data = await getData(Url.movieUpcoming + 1);
-        dispatch(movieDataActions.addData({data}));
-        dispatch(movieDataActions.changeList({list}));
-      } catch (error) {
-        dispatch(movieDataActions.changeShimmer());
+        Alert.alert(Strings.error, Strings.couldNotLoad);
+        dispatch(movieDataActions.resetShimmer());
       }
     }, 2000);
   };
 
   return {
+    loadMovieData,
     nowPlaying,
     topRated,
     upcoming,
     movieDropDownVisible,
     handleMovieDropDown,
-    loadNowPlayingData,
-    loadTopRatedData,
-    loadUpcomingData,
   };
 };
 

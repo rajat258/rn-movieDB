@@ -43,7 +43,7 @@ const useHome = (): HomeHookReturnType => {
         dispatch(popularDataActions.addData({data}));
       } catch (error) {
         setIsLoad(false);
-        dispatch(popularDataActions.changeShimmer());
+        dispatch(popularDataActions.resetShimmer());
       }
     }, 2000);
   };

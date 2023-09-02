@@ -16,9 +16,7 @@ const MovieDropDown = (): JSX.Element => {
     upcoming,
     movieDropDownVisible,
     handleMovieDropDown,
-    loadNowPlayingData,
-    loadTopRatedData,
-    loadUpcomingData,
+    loadMovieData,
   }: DropDownHookReturnType = useMovieDropDown();
 
   return (
@@ -44,18 +42,24 @@ const MovieDropDown = (): JSX.Element => {
           style={Styles.listContainer}
           colors={[Colors.indicatorGreen, Colors.white]}>
           {!nowPlaying && (
-            <TouchableOpacity onPress={loadNowPlayingData}>
-              <Text style={Styles.text}>{Strings.nowPlaying}</Text>
+            <TouchableOpacity onPress={() => loadMovieData({nowPlaying: true})}>
+              <Text allowFontScaling={false} style={Styles.text}>
+                {Strings.nowPlaying}
+              </Text>
             </TouchableOpacity>
           )}
           {!topRated && (
-            <TouchableOpacity onPress={loadTopRatedData}>
-              <Text style={Styles.text}>{Strings.topRated}</Text>
+            <TouchableOpacity onPress={() => loadMovieData({topRated: true})}>
+              <Text allowFontScaling={false} style={Styles.text}>
+                {Strings.topRated}
+              </Text>
             </TouchableOpacity>
           )}
           {!upcoming && (
-            <TouchableOpacity onPress={loadUpcomingData}>
-              <Text style={Styles.text}>{Strings.upcoming}</Text>
+            <TouchableOpacity onPress={() => loadMovieData({upcoming: true})}>
+              <Text allowFontScaling={false} style={Styles.text}>
+                {Strings.upcoming}
+              </Text>
             </TouchableOpacity>
           )}
         </LinearGradient>

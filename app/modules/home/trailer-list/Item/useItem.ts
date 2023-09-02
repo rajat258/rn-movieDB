@@ -1,30 +1,55 @@
-import {useState} from 'react';
-import {playTrailer} from '../../../../utils';
+import {useEffect, useState} from 'react';
 import {Url} from '../../../../constants';
+import {playTrailer} from '../../../../utils';
 import {ItemProps} from './Item';
 
 interface ItemHookReturnType {
   isLoaded: boolean;
+  isTrailer: boolean;
+  trailer: string;
   handleImageLoad: () => void;
-  handleItem: () => void;
-  handleItemSettings: () => void;
+  handleTrailer: () => Promise<void>;
 }
 
-const useItem = ({item}: ItemProps): ItemHookReturnType => {
+const useItem = ({
+  item,
+  currentIndex,
+  index,
+}: ItemProps): ItemHookReturnType => {
   const [isLoaded, setIsLoaded] = useState<boolean>(false);
+  const [trailer, setTrailer] = useState<string>('');
+  const [isTrailer, setIsTrailer] = useState<boolean>(false);
 
-  const handleItem = async (): Promise<void> =>
-    await playTrailer(Url.movie + '/' + item?.id + Url.videos);
+  const handleTrailer = async (): Promise<void> => {
+    if (isTrailer) {
+      setIsTrailer(false);
+      setTrailer('');
+    } else {
+      trailerFunction();
+    }
+  };
+
+  const trailerFunction = async (): Promise<void> => {
+    const key = await playTrailer(Url.movie + '/' + item?.id + Url.videos);
+    setIsTrailer(key.length !== 0);
+    setTrailer(key);
+  };
+
+  useEffect(() => {
+    if (currentIndex?.current !== index) {
+      setTrailer('');
+      setIsTrailer(false);
+    }
+  }, [currentIndex?.current]);
 
   const handleImageLoad = (): void => setIsLoaded(true);
 
-  const handleItemSettings = (): void => {};
-
   return {
+    isTrailer,
+    trailer,
+    handleTrailer,
     isLoaded,
     handleImageLoad,
-    handleItem,
-    handleItemSettings,
   };
 };
 

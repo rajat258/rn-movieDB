@@ -20,8 +20,7 @@ const TrailerDropDown = ({
     topRated,
     trailerDropDown,
     handleTrailerDropDown,
-    loadStreamingData,
-    loadTopRatedData,
+    loadTrailerData,
   }: TrailerHookReturnType = usePopularDropDown({handleBackgroundImage});
 
   return (
@@ -35,7 +34,7 @@ const TrailerDropDown = ({
           start={{x: 1, y: 0}}
           end={{x: -0.3, y: 1}}
           style={Styles.button}>
-          <Text style={Styles.buttonText}>
+          <Text allowFontScaling={false} style={Styles.buttonText}>
             {streaming ? Strings.streaming : Strings.topRated}
           </Text>
           <Image
@@ -51,13 +50,18 @@ const TrailerDropDown = ({
           style={Styles.listContainer}
           colors={[Colors.indicatorGreen, Colors.white]}>
           {!streaming && (
-            <TouchableOpacity onPress={loadStreamingData}>
-              <Text style={Styles.text}>{Strings.streaming}</Text>
+            <TouchableOpacity
+              onPress={() => loadTrailerData({streaming: true})}>
+              <Text allowFontScaling={false} style={Styles.text}>
+                {Strings.streaming}
+              </Text>
             </TouchableOpacity>
           )}
           {!topRated && (
-            <TouchableOpacity onPress={loadTopRatedData}>
-              <Text style={Styles.text}>{Strings.topRated}</Text>
+            <TouchableOpacity onPress={() => loadTrailerData({topRated: true})}>
+              <Text allowFontScaling={false} style={Styles.text}>
+                {Strings.topRated}
+              </Text>
             </TouchableOpacity>
           )}
         </LinearGradient>

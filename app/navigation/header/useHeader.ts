@@ -1,12 +1,17 @@
 import {ParamListBase, useNavigation} from '@react-navigation/native';
-import {StackNavigationProp} from '@react-navigation/stack';
+import {
+  StackNavigationOptions,
+  StackNavigationProp,
+} from '@react-navigation/stack';
 import {useState} from 'react';
 import {Routes} from '../../constants';
 
 export interface HeaderHookReturnType {
-  handleGoBack: () => void;
   handleSearch: () => void;
   navigation: StackNavigationProp<ParamListBase>;
+  authOptions?: StackNavigationOptions;
+  profile?: boolean;
+  childScreen?: boolean;
 }
 
 const useHeader = (): HeaderHookReturnType => {
@@ -18,15 +23,13 @@ const useHeader = (): HeaderHookReturnType => {
     setIsSearch(!isSearch);
   };
 
-  const handleGoBack = (): void => {
-    if (navigation.canGoBack()) {
-      navigation.goBack();
-    }
+  const authOptions: StackNavigationOptions = {
+    headerShown: false,
   };
 
   return {
+    authOptions,
     navigation,
-    handleGoBack,
     handleSearch,
   };
 };

@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect, useRef, useState} from 'react';
 import {NativeScrollEvent, NativeSyntheticEvent} from 'react-native';
 import {useSelector} from 'react-redux';
 import {Url} from '../../../constants';
@@ -9,13 +9,17 @@ export interface TrailerHookReturnType {
   backgroundImage: string;
   _onScroll: (e: NativeSyntheticEvent<NativeScrollEvent>) => void;
   handleBackgroundImage: (image: string) => void;
+  currentIndex: React.MutableRefObject<number>;
 }
 
 const useTrailer = (): TrailerHookReturnType => {
   const [backgroundImage, setBackgroundImage] = useState<string>('');
-  const {results: trailerData} = useSelector(
-    (state: TrailerDataStateType) => state.trailerData.data,
-  );
+  const currentIndex = useRef<number>(0);
+
+  const {
+    shimmer,
+    data: {results: trailerData},
+  } = useSelector((state: TrailerDataStateType) => state.trailerData);
 
   /**
    * Callback function onScrolling Flatlist to change backgroundImage
@@ -26,6 +30,7 @@ const useTrailer = (): TrailerHookReturnType => {
     const eWidth = e.nativeEvent.contentOffset.x / width;
     // Math.round used as scroll more than 0.5 to change bgImage
     const index = Math.round(eWidth);
+    currentIndex.current = index;
     handleBackgroundImage(
       Url.imageFetchUrl + trailerData[index]?.backdrop_path,
     );
@@ -38,7 +43,14 @@ const useTrailer = (): TrailerHookReturnType => {
     handleBackgroundImage(Url.imageFetchUrl + trailerData[0]?.backdrop_path);
   }, [trailerData]);
 
+  useEffect(() => {
+    if (shimmer) {
+      setBackgroundImage('');
+    }
+  }, [shimmer]);
+
   return {
+    currentIndex,
     handleBackgroundImage,
     backgroundImage,
     _onScroll,

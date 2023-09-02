@@ -17,7 +17,7 @@ export const Url = {
   videos: '?append_to_response=videos',
   credits: '?append_to_response=credits',
   youtube: 'https://www.youtube.com/watch?v=',
-  search: 'https://api.themoviedb.org/3/search/multi?query=',
+  search: 'search/multi?query=',
   movieString: 'movie',
   tvString: 'tv',
   page: '&page=',

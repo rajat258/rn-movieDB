@@ -16,7 +16,11 @@ const MaskedText = ({
 }: {
   style: StyleProp<TextProps>;
   text: string;
-}) => <Text style={style}>{text}</Text>;
+}) => (
+  <Text style={style} allowFontScaling={false}>
+    {text}
+  </Text>
+);
 
 const GradientText = ({
   text,
@@ -29,7 +33,9 @@ const GradientText = ({
   return (
     <MaskedView maskElement={<MaskedText {...{style, text}} />}>
       <LinearGradient {...rest} colors={colors}>
-        <Text style={textStyle}>{text}</Text>
+        <Text style={textStyle} allowFontScaling={false}>
+          {text}
+        </Text>
       </LinearGradient>
     </MaskedView>
   );

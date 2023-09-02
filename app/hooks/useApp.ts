@@ -1,8 +1,7 @@
 import NetInfo from '@react-native-community/netinfo';
 import {useEffect, useState} from 'react';
-import SplashScreen from 'react-native-splash-screen';
 
-interface AppHookReturnType {
+export interface AppHookReturnType {
   isConnectionAvailable: boolean;
   checkConnection: () => void;
 }
@@ -21,14 +20,9 @@ const useApp = (): AppHookReturnType => {
   };
 
   useEffect(() => {
-    setTimeout(() => {
-      SplashScreen.hide();
-    }, 1000);
     const unsubscribe = NetInfo.addEventListener(state => {
       handleConnection(state.isConnected as boolean);
     });
-
-    // Unsubscribe
     unsubscribe();
   }, []);
 

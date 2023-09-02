@@ -6,12 +6,19 @@ import {
   verticalScale,
   width,
 } from '../../../../theme';
+import {opaqueColor} from '../../../../utils';
 
 const Styles = StyleSheet.create({
   container: {
     width: width,
     paddingHorizontal: horizontalScale(20),
     height: verticalScale(220),
+  },
+  trailerContainer: {
+    backgroundColor: Colors.black,
+    width: width,
+    // to overwrite the padding of container
+    paddingHorizontal: 0,
   },
   buttonContainer: {
     width: '100%',
@@ -46,7 +53,7 @@ const Styles = StyleSheet.create({
     left: '45%',
     right: '45%',
     top: '40%',
-    tintColor: Colors.white + 90,
+    tintColor: opaqueColor(Colors.white, 0.9),
     width: moderateScale(32),
     height: moderateScale(32),
   },
@@ -59,6 +66,22 @@ const Styles = StyleSheet.create({
   },
   hideImage: {
     display: 'none',
+  },
+  crossButton: {
+    position: 'absolute',
+    zIndex: 1,
+    left: '45%',
+    right: '45%',
+    top: verticalScale(265),
+    alignItems: 'center',
+    borderRadius: moderateScale(5),
+    borderWidth: moderateScale(1),
+    borderColor: Colors.white,
+  },
+  crossImage: {
+    height: moderateScale(32),
+    width: moderateScale(32),
+    tintColor: Colors.white,
   },
 });
 

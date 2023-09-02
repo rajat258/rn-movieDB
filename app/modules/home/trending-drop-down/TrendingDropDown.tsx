@@ -15,8 +15,7 @@ const TrendingDropDown = (): JSX.Element => {
     week,
     trendingDropDownVisible,
     handleTrendingDropDown,
-    loadTodayData,
-    loadWeekData,
+    loadTrendingData,
   }: DropDownHookReturnType = useTrendingDropDown();
 
   return (
@@ -41,13 +40,17 @@ const TrendingDropDown = (): JSX.Element => {
           style={Styles.listContainer}
           colors={[Colors.indicatorGreen, Colors.white]}>
           {!today && (
-            <TouchableOpacity onPress={loadTodayData}>
-              <Text style={Styles.text}>{Strings.today}</Text>
+            <TouchableOpacity onPress={() => loadTrendingData({today: true})}>
+              <Text allowFontScaling={false} style={Styles.text}>
+                {Strings.today}
+              </Text>
             </TouchableOpacity>
           )}
           {!week && (
-            <TouchableOpacity onPress={loadWeekData}>
-              <Text style={Styles.text}>{Strings.week}</Text>
+            <TouchableOpacity onPress={() => loadTrendingData({week: true})}>
+              <Text allowFontScaling={false} style={Styles.text}>
+                {Strings.week}
+              </Text>
             </TouchableOpacity>
           )}
         </LinearGradient>
