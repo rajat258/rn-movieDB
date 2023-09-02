@@ -11,7 +11,7 @@
 
 ## Download
 
-- Download the apk from [here](https://apkfab.com/moviedb/com.moviedb/apk?h=644ab6999ea53bca47e51b49cbef676cd76a305e4d563b13073c2d260fa89cde).
+- Download the apk from [here](https://www.upload-apk.com/hYquezwhDn3vuTr).
 
 
 ## Screenshots
