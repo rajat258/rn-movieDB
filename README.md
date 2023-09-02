@@ -6,7 +6,11 @@
 [![MIT License](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://choosealicense.com/licenses/mit/)
 
 
-🎬 Welcome to rn-movieDB, your ultimate cross-platform movie application! 📽️ Explore the world of movies with the recreation of The Movie DB, delivering an immersive cinematic experience. Discover an array of features, including captivating 🔮 shimmer skeleton loading, 🔄 pull-to-refresh, 🔍 intelligent search module, 📡 real-time internet connectivity check, and 🎥 seamless trailer playback. Dive into the world of cinema and bring your favorite movies to life with rn-movieDB. Lights, camera, action! 🎬🍿
+🎬 Welcome to rn-movieDB, your ultimate cross-platform movie application! 📽️ Explore the world of movies with the recreation of The Movie DB, delivering an immersive cinematic experience. Discover an array of features, including captivating 🔮 shimmer skeleton loading, 🔄 pull-to-refresh, 🔍 intelligent search module, 📡 real-time internet connectivity check, and 🎥 seamless trailer playback. Dive into the world of cinema and bring your favorite movies to life with rn-movieDB.
+
+But there's more! rn-movieDB offers an exciting Chat module that lets you connect with movie enthusiasts around the globe. With secure login and signup using Firebase Auth, we've recreated the magic of WhatsApp-like chats. Engage in lively conversations, share your current location, and exchange captivating images and videos, enhancing your movie experience. Connect, chat, and celebrate your love for cinema with rn-movieDB! 🌐📱💬
+Lights, camera, action! 🎬🍿
+
 
 
 ## Download
