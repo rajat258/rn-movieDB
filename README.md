@@ -1,22 +1,17 @@
-
 # rn-movieDB
 
 ![Logo](./app/assets/images/logo@3x.png)
 
 [![MIT License](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://choosealicense.com/licenses/mit/)
 
-
 🎬 Welcome to rn-movieDB, your ultimate cross-platform movie application! 📽️ Explore the world of movies with the recreation of The Movie DB, delivering an immersive cinematic experience. Discover an array of features, including captivating 🔮 shimmer skeleton loading, 🔄 pull-to-refresh, 🔍 intelligent search module, 📡 real-time internet connectivity check, and 🎥 seamless trailer playback. Dive into the world of cinema and bring your favorite movies to life with rn-movieDB.
 
 But there's more! rn-movieDB offers an exciting Chat module that lets you connect with movie enthusiasts around the globe. With secure login and signup using Firebase Auth, we've recreated the magic of WhatsApp-like chats. Engage in lively conversations, share your current location, and exchange captivating images and videos, enhancing your movie experience. Connect, chat, and celebrate your love for cinema with rn-movieDB! 🌐📱💬
 Lights, camera, action! 🎬🍿
 
-
-
 ## Download
 
 - Download the apk from [here](https://www.upload-apk.com/hYquezwhDn3vuTr).
-
 
 ## Screenshots
 
@@ -66,7 +61,6 @@ Lights, camera, action! 🎬🍿
         margin: auto;"/>
 </div>
 
-
 ## Features
 
 - 🔄 Redux State Management
@@ -76,7 +70,6 @@ Lights, camera, action! 🎬🍿
 - 🎥 Seamless Trailer Playback
 - 🌐 REST API Handling
 - 🔄 Pull-to-Refresh
-
 
 ## Installation
 
@@ -105,6 +98,12 @@ Install rn-movieDB with npm
   rvm use 2.7.6
 ```
 
+#### Setup Permission handler on iOS
+
+```bash
+  npx react-native setup-ios-permissions
+```
+
 ### iOS Installation:
 
 ```bash
@@ -120,14 +119,15 @@ No specific installation required for android.
 ```bash
   npm run start
 ```
+
 ## API Reference
 
 API used for this project is [here](https://developer.themoviedb.org/docs/getting-started).
 
-
 ## Troubleshooting
 
 ##### Gradle build error in android:
+
 - Open Android Studio
 - Files > Sync files with project
 - Build > Clean project
@@ -135,16 +135,14 @@ API used for this project is [here](https://developer.themoviedb.org/docs/gettin
 
 ## Color Reference
 
-| Color              | Hex                                                              |
-| ------------------ | ---------------------------------------------------------------- |
-| Background Color      | ![#ffffff](https://via.placeholder.com/10/ffffff?text=+) #ffffff |
-| Primary Color | ![#0d253f](https://via.placeholder.com/10/0d253f?text=+) #0d253f |
-| Secondary Color    | ![#12D780](https://via.placeholder.com/10/12D780?text=+) #12D780 |
-| Accent 100 Color   | ![#90CEA1](https://via.placeholder.com/10/90CEA1?text=+) #90CEA1 |
-| Accent 200 Color   | ![#01b4e4](https://via.placeholder.com/10/01b4e4?text=+) #01b4e4 |
-
+| Color            | Hex                                                              |
+| ---------------- | ---------------------------------------------------------------- |
+| Background Color | ![#ffffff](https://via.placeholder.com/10/ffffff?text=+) #ffffff |
+| Primary Color    | ![#0d253f](https://via.placeholder.com/10/0d253f?text=+) #0d253f |
+| Secondary Color  | ![#12D780](https://via.placeholder.com/10/12D780?text=+) #12D780 |
+| Accent 100 Color | ![#90CEA1](https://via.placeholder.com/10/90CEA1?text=+) #90CEA1 |
+| Accent 200 Color | ![#01b4e4](https://via.placeholder.com/10/01b4e4?text=+) #01b4e4 |
 
 ## Authors
 
 - [@rajat258](https://github.com/rajat258)
-
